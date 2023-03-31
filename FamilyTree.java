@@ -6,13 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 public class FamilyTree {
-    
     private List<Person> people;
-    // private List<Person> partners;
 
     public FamilyTree() {
         this.people = new ArrayList<Person>();
-        // this.partners = new ArrayList<Person>();
     }
 
     public void addPerson(Person person) {
@@ -25,16 +22,11 @@ public class FamilyTree {
     }
 
     public void printTree() {
-        // Integer ind = 1;
+        System.out.println("Генеалогическое дерево:");
         for (Person person : people) {
-            if (person.getParents().isEmpty()) { // check if person has no parents (is root)
-                // ind++;
+            if (person.getParents().isEmpty()) {
                 printNode(person, 0);
-            }
-            // if (ind == 3) {
-            //     break;
-            // }
-            
+            } 
         }
     }
     
@@ -45,7 +37,6 @@ public class FamilyTree {
             tabs += "\t";
         }
     
-        // concatenate parents' names into a string
         String parents = "";
         Set<Person> parentsSet = new HashSet<>();
         for (Person parent : person.getParents()) {
@@ -54,14 +45,13 @@ public class FamilyTree {
             }
             parentsSet.add(parent);
         }
-        if (parents.length() > 1) {
-            parents = parents.substring(0, parents.length()); // было: length() - 2
+        if (parentsSet.size() > 1) {
+            parents = parents.substring(0, parents.length());
         }
-        if (parents.length() < 1) {
+        if (parentsSet.size() < 1) {
             parents = "unknown";
         }
-        
-        // print person with parents' names
+        // System.out.println(parentsSet.size()); // показать сколько родителей
         System.out.println(tabs + person.getName() + " " + person.getSurname() + "-parents: (" + parents + ")");
         if (person.getPartner() != null) {
             System.out.println(tabs + person.getPartner());
@@ -70,7 +60,6 @@ public class FamilyTree {
         }
         
         
-        // print children recursively
         for (Person child : person.getChildren()) {
             printNode(child, level + 1);
         }
@@ -80,9 +69,7 @@ public class FamilyTree {
         try {
             FileWriter writer = new FileWriter(filename);
             
-            // iterate over all people in the tree
             for (Person person : people) {
-                // concatenate parents' names into a string
                 String parents = "";
                 Set<Person> parentsSet = new HashSet<>();
                 for (Person parent : person.getParents()) {
@@ -98,7 +85,6 @@ public class FamilyTree {
                     parents = "unknown";
                 }
                 
-                // concatenate children's names into a string
                 String children = "";
                 Set<Person> childrenSet = new HashSet<>();
                 for (Person child : person.getChildren()) {
@@ -114,7 +100,6 @@ public class FamilyTree {
                     children = "no children";
                 }
                 
-                // write person's data to file
                 if (person.getPartner() != null) {
                     writer.write(person.getId() + ": " + person.getName() + " " + person.getSurname() +  " partner: " + person.getPartner()
                     + ", parents: " + parents + ", children: " + children + "\n");
@@ -130,7 +115,6 @@ public class FamilyTree {
             e.printStackTrace();
         }
     }
-    // other methods omitted for brevity
 }
 
 

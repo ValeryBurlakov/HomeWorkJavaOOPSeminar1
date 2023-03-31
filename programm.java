@@ -10,29 +10,30 @@ public class programm {
         Person Lyuda1 = new Person(3, "Lyuda", "Brown", 50, Gender.FEMALE);
         Person Vitya1 = new Person(4, "Vitya", "Brown", 50, Gender.MALE);
 
-        Person Vera1 = new Person(5, "Vera", "Brown", 23, Gender.FEMALE);
+        Person Vera = new Person(5, "Vera", "Brown", 23, Gender.FEMALE);
 
-        Person Vera2 = new Person(6, "Vera2", "Brown", 3, Gender.FEMALE);
-        // System.out.println(Oleg1);
-        // System.out.println(Lyuda1);
+        Person Lily = new Person(6, "Lily", "Brown", 3, Gender.FEMALE);
 
-        // создание родства
-        Oleg1.setPartner(Olga1);
-        Olga1.setPartner(Oleg1);
+        Person Kate = new Person(7, "Kate", "Brown", 5, Gender.FEMALE);
+        Person Lena = new Person(8, "Lena", "Brown", 5, Gender.FEMALE);
+        
+
+        // создание родства и других связей
+
         Oleg1.addSpouse(Olga1);
-        Olga1.addSpouse(Oleg1);
         Lyuda1.addFather(Oleg1);
         Lyuda1.addMother(Olga1);
+        Kate.addFather(Oleg1);
 
-        Vitya1.setPartner(Lyuda1);
-        Lyuda1.setPartner(Vitya1);
-        Vera1.addFather(Vitya1);
-        Vera1.addMother(Lyuda1);
+        Vitya1.addSpouse(Lyuda1);
+        Vera.addFather(Vitya1);
+        Vera.addMother(Lyuda1);
 
-        Vera2.addMother(Vera1);
-        // Vera1.addChild(Vera2);
+        Lily.addMother(Vera);
+        Lena.addMother(Vera);
         
-        // System.out.printf("У Олега есть ребенок:" + Oleg1.getChildren());
+        System.out.printf("Дети Олега: " + Oleg1.getChildren() + "\n");
+        System.out.println("Родители Веры: " + Vera.getMother() + " and " + Vera.getFather());
         // System.out.printf("У Люды есть ребенок:" + Lyuda1.getChildren());
 
         // создание дерева персонов
@@ -46,15 +47,14 @@ public class programm {
         tree1.addPerson(Vitya1);
         tree1.addPerson(Lyuda1);
 
-        tree1.addPerson(Vera1);
+        tree1.addPerson(Vera);
 
-        tree1.addPerson(Vera2);
+        tree1.addPerson(Lily);
+        tree1.addPerson(Kate);        
+        tree1.addPerson(Lena);
 
-        // Oleg1.getPartner();
-        // System.out.println(Oleg1.getSpouse(Oleg1));
-        // System.out.println(Olga1.getSpouse(Olga1));
-        // System.out.println(Oleg1.getPartner());
         // методы нашего дерева
+
         tree1.printTree(); // вывод более-менее красиво
         // tree1.allTree(); // вывод списком
         tree1.saveToFile("newTree.txt"); // сохранение в файл

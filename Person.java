@@ -8,16 +8,16 @@ public class Person {
     private String surname;
     private int age;
     private Gender gender;
-    private List<Person> children;
     private Person mother;
     private Person father;
     private Person husband;
     private Person wife;
+    private List<Person> children;
     private List<Person> siblings;
     private List<Person> parents;
-    private List<Person> partners;
     private int idPerson;
     private Person spouse;
+
     public Person(Integer idPerson, String name, String surname, int age, Gender gender) {
         this.name = name;
         this.surname = surname;
@@ -35,16 +35,16 @@ public class Person {
         if (gender == Gender.MALE) {
             child.setFather(this);
             
-            if (wife != null) {
-                child.setMother(wife);
+            // if (wife != null) { // автоматическое добавление второго родителя, но это некорректно
+            //     child.setMother(wife); // у одного из родителей могут быть дети от пред брака
 
-            }
+            // }
         } else {
             child.setMother(this);
-            if (husband != null) {
-                child.setFather(husband);
+            // if (husband != null) {
+            //     child.setFather(husband);
 
-            }
+            // }
         }
     }
 
@@ -58,6 +58,7 @@ public class Person {
         this.mother = mother;
         mother.addChild(this);
     }
+
     public void setMother(Person mother) {
         this.mother = mother;
         parents.add(mother);
@@ -83,45 +84,22 @@ public class Person {
         return new HashSet<>(children);
     }
     
-    // public void addSibling(Person sibling) {
-    //     siblings.add(sibling);
-    //     sibling.getSiblings().add(this);
-    // }
-
-
     public void addSpouse(Person spouse) {
         this.spouse = spouse;
         spouse.spouse = this;
+        spouse.setPartner(spouse.spouse);
+        spouse.spouse.setPartner(spouse);
     }
     
     public void setPartner(Person partner) {
-
         if (partner.getGender() == Gender.FEMALE) {
-            // parents.add(partner);
             siblings.add(partner);
-            
             partner.getSiblings().add(this);
-            // partner.setFather(father);
-            // partner.setMother(mother);
             wife = partner;
-            // try {
-            //     partners.add(this.getPartner());
-            //     System.out.println(partners);
-            // } catch (Exception e) {
-            // }
-
         } else {
-            // parents.add(partner);
             siblings.add(partner);
             partner.getSiblings().add(this);
-            // partner.setFather(father);
-            // partner.setMother(mother);
             husband = partner;
-            // try {
-            //     partners.add(this.getPartner());
-            //     System.out.println(partners);
-            // } catch (Exception e) {
-            // }
         }
     }
 
@@ -162,13 +140,13 @@ public class Person {
         }
     }
 
-    public Person getHusband() {
-        if (gender == Gender.FEMALE) {
-            return getPartner();
-        } else {
-            return husband;
-        }
-    }
+    // public Person getHusband() {
+    //     if (gender == Gender.FEMALE) {
+    //         return getPartner();
+    //     } else {
+    //         return husband;
+    //     }
+    // }
 
     public void setHusband(Person husband) {
         this.husband = husband;
@@ -177,13 +155,13 @@ public class Person {
         }
     }
 
-    public Person getWife() {
-        if (gender == Gender.MALE) {
-            return getPartner();
-        } else {
-            return wife;
-        }
-    }
+    // public Person getWife() {
+    //     if (gender == Gender.MALE) {
+    //         return getPartner();
+    //     } else {
+    //         return wife;
+    //     }
+    // }
 
     public void setWife(Person wife) {
         this.wife = wife;
