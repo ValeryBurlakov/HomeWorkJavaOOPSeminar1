@@ -2,5 +2,5 @@
 2: Olga Brown partner: Oleg, parents: unknown, children: Lyuda Brown
 4: Vitya Brown partner: Lyuda, parents: unknown, children: Vera Brown
 3: Lyuda Brown partner: Vitya, parents: Olga Brown Oleg Brown, children: Vera Brown
-5: Vera Brown partner: null, parents: Vitya Brown Lyuda Brown, children: Vera2 Brown
-6: Vera2 Brown partner: null, parents: Vera Brown, children: none
+5: Vera Brown partner: no spouse, parents: Vitya Brown Lyuda Brown, children: Vera2 Brown
+6: Vera2 Brown partner: no spouse, parents: Vera Brown, children: no children

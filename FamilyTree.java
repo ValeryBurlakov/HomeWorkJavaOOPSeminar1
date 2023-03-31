@@ -8,11 +8,11 @@ import java.util.Set;
 public class FamilyTree {
     
     private List<Person> people;
-    private List<Person> partners;
+    // private List<Person> partners;
 
     public FamilyTree() {
         this.people = new ArrayList<Person>();
-        this.partners = new ArrayList<Person>();
+        // this.partners = new ArrayList<Person>();
     }
 
     public void addPerson(Person person) {
@@ -58,11 +58,17 @@ public class FamilyTree {
             parents = parents.substring(0, parents.length()); // было: length() - 2
         }
         if (parents.length() < 1) {
-            parents = "unknow";
+            parents = "unknown";
         }
         
         // print person with parents' names
-        System.out.println(tabs + person.getName() + "-parents: (" + parents + ")");
+        System.out.println(tabs + person.getName() + " " + person.getSurname() + "-parents: (" + parents + ")");
+        if (person.getPartner() != null) {
+            System.out.println(tabs + person.getPartner());
+        } else {
+            System.out.println(tabs + "no spouse");
+        }
+        
         
         // print children recursively
         for (Person child : person.getChildren()) {
@@ -105,12 +111,18 @@ public class FamilyTree {
                     children = children.substring(0, children.length() - 2);
                 }
                 if (children.length() < 1) {
-                    children = "none";
+                    children = "no children";
                 }
                 
                 // write person's data to file
-                writer.write(person.getId() + ": " + person.getName() + " " + person.getSurname() +  " partner: " + person.getPartner()
-                                            + ", parents: " + parents + ", children: " + children + "\n");
+                if (person.getPartner() != null) {
+                    writer.write(person.getId() + ": " + person.getName() + " " + person.getSurname() +  " partner: " + person.getPartner()
+                    + ", parents: " + parents + ", children: " + children + "\n");
+                } else {
+                    writer.write(person.getId() + ": " + person.getName() + " " + person.getSurname() +  " partner: " + "no spouse"
+                    + ", parents: " + parents + ", children: " + children + "\n");
+                }
+
             }
             
             writer.close();
