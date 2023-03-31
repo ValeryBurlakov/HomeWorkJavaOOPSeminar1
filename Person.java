@@ -1,59 +1,133 @@
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 public class Person {
     private String name;
     private String surname;
     private int age;
-    private boolean isMale;
+    private Gender gender;
     private List<Person> children;
     private Person mother;
     private Person father;
+    private Person husband;
+    private Person wife;
     private List<Person> siblings;
     private List<Person> parents;
-
-    public Person(String name, String surname, int age, boolean isMale) {
+    private List<Person> partners;
+    private int idPerson;
+    private Person spouse;
+    public Person(Integer idPerson, String name, String surname, int age, Gender gender) {
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.isMale = isMale;
+        this.gender = gender;
+        this.idPerson = idPerson;
+        this.spouse = null;
         this.children = new ArrayList<Person>();
         this.siblings = new ArrayList<Person>();
         this.parents = new ArrayList<Person>();
     }
 
-    // getters and setters omitted for brevity
-
     public void addChild(Person child) {
         children.add(child);
-        child.setMother(this);
-        child.setFather(this);
+        if (gender == Gender.MALE) {
+            child.setFather(this);
+            
+            if (wife != null) {
+                child.setMother(wife);
+
+            }
+        } else {
+            child.setMother(this);
+            if (husband != null) {
+                child.setFather(husband);
+
+            }
+        }
     }
 
-    // public void addParents(Person parent) {
-    //     parents.add(parent);
-    //     parents.setChild(this);
-    //     parents.setChild(this.getPartner());
-    // }
-
-    public void addSibling(Person sibling) {
-        siblings.add(sibling);
-        sibling.getSiblings().add(this);
+    public void addFather(Person father) {
+        this.father = father;
+        father.addChild(this);
+        
     }
 
+    public void addMother(Person mother) {
+        this.mother = mother;
+        mother.addChild(this);
+    }
     public void setMother(Person mother) {
         this.mother = mother;
         parents.add(mother);
     }
+
     public void setFather(Person father) {
         this.father = father;
         parents.add(father);
     }
 
-    // public List<Person> setChild(Person children) {
-    //     this.children = children.getChildren();
+    public Set<Person> getParents() {
+        Set<Person> parents = new HashSet<>();
+        if (father != null) {
+            parents.add(father);
+        }
+        if (mother != null) {
+            parents.add(mother);
+        }
+        return parents;
+    }
+
+    public Set<Person> getChildren() {
+        return new HashSet<>(children);
+    }
+    
+    // public void addSibling(Person sibling) {
+    //     siblings.add(sibling);
+    //     sibling.getSiblings().add(this);
     // }
+
+
+    public void addSpouse(Person spouse) {
+        this.spouse = spouse;
+        spouse.spouse = this;
+    }
+    
+    public void setPartner(Person partner) {
+
+        if (partner.getGender() == Gender.FEMALE) {
+            // parents.add(partner);
+            siblings.add(partner);
+            
+            partner.getSiblings().add(this);
+            // partner.setFather(father);
+            // partner.setMother(mother);
+            wife = partner;
+            // try {
+            //     partners.add(this.getPartner());
+            //     System.out.println(partners);
+            // } catch (Exception e) {
+            // }
+
+        } else {
+            // parents.add(partner);
+            siblings.add(partner);
+            partner.getSiblings().add(this);
+            // partner.setFather(father);
+            // partner.setMother(mother);
+            husband = partner;
+            // try {
+            //     partners.add(this.getPartner());
+            //     System.out.println(partners);
+            // } catch (Exception e) {
+            // }
+        }
+    }
+
+    private Gender getGender() {
+        return gender;
+    }
 
     public Person getMother() {
         return mother;
@@ -63,54 +137,68 @@ public class Person {
         return father;
     }
 
-    public List<Person> getChildren() {
-        return children;
-    }
-
     public List<Person> getSiblings() {
         return siblings;
-    }
-
-    public List<Person> getParents() {
-        return parents;
     }
 
     public String getName() {
         return name;
     }
-    
+
+    public String getSurname() {
+        return surname;
+    }
+
     public Person getPartner() {
-        if (isMale) {
-            return getWife();
+        Set<Person> partner = new HashSet<>();
+        if (husband != null && husband.getGender() == Gender.MALE) {
+            partner.add(husband);
+            return husband;
+        } else if (wife != null && wife.getGender() == Gender.FEMALE) {
+            partner.add(wife);
+            return wife;
         } else {
-            return getHusband();
+            return null;
         }
     }
 
     public Person getHusband() {
-        for (Person sibling : siblings) {
-            if (!sibling.isMale && sibling.getFather() == father) {
-                return sibling;
-            }
+        if (gender == Gender.FEMALE) {
+            return getPartner();
+        } else {
+            return husband;
         }
-        return null;
+    }
+
+    public void setHusband(Person husband) {
+        this.husband = husband;
+        if (husband != null) {
+            husband.setWife(this);
+        }
     }
 
     public Person getWife() {
-        for (Person sibling : siblings) {
-            if (sibling.isMale && sibling.getMother() == mother) {
-                return sibling;
-            }
+        if (gender == Gender.MALE) {
+            return getPartner();
+        } else {
+            return wife;
         }
-        return null;
     }
 
+    public void setWife(Person wife) {
+        this.wife = wife;
+        if (wife != null) {
+            wife.setWife(this);
+        }
+    }
+
+    public Integer getId() {
+        return idPerson;
+    }
+    
     @Override 
     public String toString() {
-        // return "{" + "name='" + name + '\'' + " surname='" + surname + '\'' +
-        //             ", age='" + age + '\'' + ", sex='" + sex + '\'' +'}';
-        return String.format("name: %s %s age: %d, isMale: %s", name, surname, age, isMale);
+        return String.format(name, surname, age);
     }
-
 
 }
