@@ -91,19 +91,8 @@ public class program {
             System.out.printf("%s открыл в комоде цвета %s ящик: %s \n", Vitya1, twoCommode, drawer03);
         }
 
-        System.out.println(open6);
+        System.out.println(open6); // можно так укоротить клиентский код
         System.out.println(open7);
     }
 
 }
-
-
-// Parents parents = new Parents(Status.parents, person);
-// // System.out.println(parents);
-
-// Kids kids1 = new Kids(Status.children, person2);
-// // System.out.println(kids1);
-
-// if (parents.getStatus() == Status.parents) {
-//     System.out.printf("%s является родителем %s", parents, kids1);
-// }
