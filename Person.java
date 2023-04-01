@@ -7,16 +7,18 @@ public class Person {
     private String name;
     private String surname;
     private int age;
+    private int idPerson;
     private Gender gender;
     private Person mother;
     private Person father;
     private Person husband;
     private Person wife;
+    private Person spouse;
     private List<Person> children;
     private List<Person> siblings;
     private List<Person> parents;
-    private int idPerson;
-    private Person spouse;
+
+
 
     public Person(Integer idPerson, String name, String surname, int age, Gender gender) {
         this.name = name;
@@ -148,12 +150,12 @@ public class Person {
     //     }
     // }
 
-    public void setHusband(Person husband) {
-        this.husband = husband;
-        if (husband != null) {
-            husband.setWife(this);
-        }
-    }
+    // public void setHusband(Person husband) {
+    //     this.husband = husband;
+    //     if (husband != null) {
+    //         husband.setWife(this);
+    //     }
+    // }
 
     // public Person getWife() {
     //     if (gender == Gender.MALE) {
@@ -163,12 +165,12 @@ public class Person {
     //     }
     // }
 
-    public void setWife(Person wife) {
-        this.wife = wife;
-        if (wife != null) {
-            wife.setWife(this);
-        }
-    }
+    // public void setWife(Person wife) {
+    //     this.wife = wife;
+    //     if (wife != null) {
+    //         wife.setWife(this);
+    //     }
+    // }
 
     public Integer getId() {
         return idPerson;

@@ -30,7 +30,6 @@ public class FamilyTree {
         }
     }
     
-
     private void printNode(Person person, int level) {
         String tabs = "";
         for (int i = 0; i < level; i++) {
